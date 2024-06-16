@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
+import postRoutes from './routes/post.routes.js'
 import connectToMongo from './db/connectMongoDb.js';
 dotenv.config();
 
@@ -19,7 +20,8 @@ const PORT = process.env.PORT || 8082
 app.use(express.json())
 app.use(cookieParser())
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes)
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
