@@ -20,7 +20,6 @@ function App() {
         const data = await res.json();
         if(data.error) return null;
         if(!res.ok || data.error) throw new Error(data.error || "Something went wrong");
-        console.log(data, "authuser");
         return data;
       } catch (error ) {
         throw new Error(error)
