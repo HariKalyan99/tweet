@@ -72,6 +72,7 @@ export const commentOnPost = async(request, response) => {
         const {text} = request.body;
         const postId = request.params.id;
         const userId = request.user._id;
+        console.log(text, postId, userId)
 
         if(!text) {
             return response.status(400).json({error: "Text field is required"});
