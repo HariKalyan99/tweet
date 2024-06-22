@@ -1,12 +1,12 @@
 import express from 'express';
 import { validateAuthorization } from '../middlewares/authorization.middleware.js';
-import { createPost, deletePost,commentOnPost, likeUnlikePost, getAllPosts, getLikedPosts, getFollowingPosts, getUserPosts } from '../controllers/post.controllers.js';
+import { createPost, deletePost,commentOnPost, likeUnlikePost, getAllPosts, getlikedPosts, getFollowingPosts, getUserPosts } from '../controllers/post.controllers.js';
 
 const router = express.Router();
 
 router.get("/all", validateAuthorization, getAllPosts);
 router.get("/following", validateAuthorization, getFollowingPosts);
-router.get("/likes/:id", validateAuthorization, getLikedPosts);
+router.get("/likes/:id", validateAuthorization, getlikedPosts);
 router.get("/user/:username", validateAuthorization, getUserPosts);
 router.post("/create", validateAuthorization, createPost);
 router.post("/like/:id", validateAuthorization, likeUnlikePost);

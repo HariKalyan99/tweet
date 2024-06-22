@@ -14,12 +14,12 @@ const SignUpPage = () => {
 	const [formData, setFormData] = useState({
 		email: "",
 		username: "",
-		fullname: "",
+		fullName: "",
 		password: "",
 	});
 
 	const {mutate:signupMutation, isError, isPending, error} = useMutation({
-		mutationFn: async({email, username, fullname, password}) => {
+		mutationFn: async({email, username, fullName, password}) => {
 			try {
 				const res = await fetch("/api/auth/signup", {
 					method: "POST",
@@ -27,7 +27,7 @@ const SignUpPage = () => {
 						"Content-Type": "application/json"
 					},
 					body: JSON.stringify({
-						email, username, fullname, password
+						email, username, fullName, password
 					})
 				})
 				const data = await res.json();
@@ -91,9 +91,9 @@ const SignUpPage = () => {
 								type='text'
 								className='grow'
 								placeholder='Full Name'
-								name='fullname'
+								name='fullName'
 								onChange={handleInputChange}
-								value={formData.fullname}
+								value={formData.fullName}
 							/>
 						</label>
 					</div>

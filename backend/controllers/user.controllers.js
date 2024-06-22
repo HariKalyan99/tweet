@@ -97,9 +97,9 @@ export const getSuggestedUsers = async(request, response) => {
 
 export const updateUserProfile = async(request, response) => {
     try {
-        const {fullname, username, email, currentPassword ,newPassword, bio, link} = request.body;
+        const {fullName, username, email, currentPassword ,newPassword, bio, link} = request.body;
 
-        let {profileimg, coverimg} = request.body;
+        let {profileImg, coverImg} = request.body;
 
         const userId = request.user._id;
 
@@ -123,29 +123,29 @@ export const updateUserProfile = async(request, response) => {
             user.password = await bcrypt.hash(newPassword, salt);
         }
 
-        if(profileimg){
-            if(user.profileimg){
-                await cloudinary.uploader.destroy(user.profileimg.split("/").pop().split(".")[0])
+        if(profileImg){
+            if(user.profileImg){
+                await cloudinary.uploader.destroy(user.profileImg.split("/").pop().split(".")[0])
             }
-            const uploadedResponse = await cloudinary.uploader.upload(profileimg);
-            profileimg = uploadedResponse.secure_url;
+            const uploadedResponse = await cloudinary.uploader.upload(profileImg);
+            profileImg = uploadedResponse.secure_url;
         }
 
-        if(coverimg){
-            if(user.coverimg){
-                await cloudinary.uploader.destroy(user.coverimg.split("/").pop().split(".")[0])
+        if(coverImg){
+            if(user.coverImg){
+                await cloudinary.uploader.destroy(user.coverImg.split("/").pop().split(".")[0])
             }
-            const uploadedResponse = await cloudinary.uploader.upload(coverimg);
-            coverimg = uploadedResponse.secure_url;
+            const uploadedResponse = await cloudinary.uploader.upload(coverImg);
+            coverImg = uploadedResponse.secure_url;
         }
 
-        user.fullname = fullname || user.fullname;
+        user.fullName = fullName || user.fullName;
         user.email = email || user.email;
         user.username = username || user.username;
         user.bio = bio || user.bio;
         user.link = link || user.link;
-        user.profileimg = profileimg || user.profileimg;
-        user.coverimg = coverimg || user.coverimg;
+        user.profileImg = profileImg || user.profileImg;
+        user.coverImg = coverImg || user.coverImg;
 
         user = await user.save();
         user.password = null

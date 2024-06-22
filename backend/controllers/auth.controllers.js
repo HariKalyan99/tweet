@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 
 export const authSignup = async(request, response) => {
     try{
-        const {fullname, username, email, password} = request.body;
+        const {fullName, username, email, password} = request.body;
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailRegex.test(email)){
@@ -29,7 +29,7 @@ export const authSignup = async(request, response) => {
 
 
         const newUser = new User({
-            fullname,
+            fullName,
             username,
             email,
             password: hashedPassword
@@ -41,13 +41,13 @@ export const authSignup = async(request, response) => {
             await newUser.save();
             return response.status(201).json({
                 _id: newUser._id,
-                fullname: newUser.fullname,
+                fullName: newUser.fullName,
                 username: newUser.username,
                 email: newUser.email,
                 followers: newUser.followers,
                 following: newUser.following,
-                profileimg: newUser.profileimg,
-                coverimg: newUser.coverimg
+                profileImg: newUser.profileImg,
+                coverImg: newUser.coverImg
             })
         }else{
             return response.status(400).json({message: "Invalid user data"})
@@ -74,13 +74,13 @@ export const authLogin = async(request, response) => {
 
         return response.status(201).json({
             _id: user._id,
-            fullname: user.fullname,
+            fullName: user.fullName,
             username: user.username,
             email: user.email,
             followers: user.followers,
             following: user.following,
-            profileimg: user.profileimg,
-            coverimg: user.coverimg
+            profileImg: user.profileImg,
+            coverImg: user.coverImg
         })
 
     }catch(error){

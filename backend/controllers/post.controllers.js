@@ -111,12 +111,12 @@ export const likeUnlikePost = async(request, response) => {
 
         if(userLikedPost){
             await Post.updateOne({_id: postId}, {$pull: {likes: userId}}) ;
-            await User.updateOne({_id: userId}, {$pull : {likedposts: postId}});
+            await User.updateOne({_id: userId}, {$pull : {likedPosts: postId}});
             const updatedLikes = post.likes.filter((id) => id.toString() !== userId.toString());
             return response.status(200).json(updatedLikes);
         }else{
             post.likes.push(userId);
-            await User.updateOne({_id: userId}, {$push : {likedposts: postId}});
+            await User.updateOne({_id: userId}, {$push : {likedPosts: postId}});
             await post.save();
 
             const notification = new NotificationModel({
@@ -156,7 +156,7 @@ export const getAllPosts = async(request, response) => {
     }
 }
 
-export const getLikedPosts = async(request, response) => {
+export const getlikedPosts = async(request, response) => {
     try {
         const {id: userId} = request.params;
         const user = await User.findById(userId);
@@ -164,7 +164,7 @@ export const getLikedPosts = async(request, response) => {
             return response.status(404).json({error: "User not found"})
         }
 
-        const likedPosts = await Post.find({_id: {$in: user.likedposts}}).populate({
+        const likedPosts = await Post.find({_id: {$in: user.likedPosts}}).populate({
             path: "user",
             select: "-password"
         }).populate({
@@ -175,7 +175,7 @@ export const getLikedPosts = async(request, response) => {
 
         return response.status(200).json(likedPosts);
     } catch (error) {
-        console.log("Error in getLikedPosts controller", error);
+        console.log("Error in getlikedPosts controller", error);
         return response.status(400).json({error: "Internal server error"})
     }
 }
